@@ -42,5 +42,4 @@ def processar_texto():
     return jsonify({'mensagem': "\n".join(listaFinal)})
 
 if __name__ == '__main__':
-    app.debug = True
     app.run()
