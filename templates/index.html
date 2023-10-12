@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Organizador de Listas de Eventos</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Cor de fundo clara e suave */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #container {
+            display: flex;
+            border-radius: 10px;
+            background-color: #f5f5f5; /* Cor de fundo dos retângulos (mesma cor) */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            height: 80%; /* Definindo a altura em relação à altura da janela */
+            width: 80%; /* Definindo a largura em relação à largura da janela */
+        }
+
+        #retangulo1, #retangulo2 {
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1; /* Distribuir espaço igualmente entre os retângulos */
+        }
+
+        #retangulo2 {
+            background-color: #f5f5f5; /* Mesma cor do retângulo 1 */
+        }
+
+        #input-box, #resultado-box {
+            padding: 10px;
+            border: 1px solid #ccc; /* Borda fina cinza */
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 100%; /* Preencher a largura do retângulo */
+            height: 90%; /* Aumentando a altura da caixa de texto */
+        }
+
+        #input-box, #resultado-box {
+            white-space: pre-line; /* Permite quebras de linha e espaços em branco */
+        }
+
+        #submit-button {
+            padding: 10px 20px;
+            background-color: #007bff; /* Cor de fundo do botão */
+            color: #fff; /* Cor do texto do botão */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #retangulo2 {
+            margin-left: 10px; /* Adicionando um espaçamento entre os retângulos */
+        }
+    </style>
+</head>
+<body>
+    <div class="titulo-container">
+        <h1>Bem-vindo(a) ao Super Organizador de Listas de Eventos 3000!</h1>
+        <p>À esquerda, coloque a sua lista ao modo como ela está e veja, à direita
+            ela ser organizada em ordem alfabética e tendo caracteres estranhos
+            sendo removidos! Lembre-se de colocar apenas a parte dos nomes!
+        </p>
+    </div>
+    <div id="container">
+        <div id="retangulo1">
+            <textarea id="input-box" placeholder="Digite algo"></textarea>
+            <button id="submit-button" onclick="enviarTexto()">Enviar</button>
+        </div>
+        <div id="retangulo2">
+            <textarea id="resultado-box" placeholder="Resultado do processamento" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        function enviarTexto() {
+            const texto = document.getElementById('input-box').value; // Obtém o valor da caixa de texto
+            fetch('/processar-texto', {
+                method: 'POST',
+                body: JSON.stringify({ texto }), // Envie o texto como JSON
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('resultado-box').value = data.mensagem; // Exibe o resultado no segundo input box
+            });
+        }
+    </script>
+</body>
+</html>
